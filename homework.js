@@ -1,9 +1,9 @@
 var PopupLoader = function(){
     'use strict';
 
-    var parentLink = document.getElementsByClassName('links')[0];
+    var body = document.body;
 
-    parentLink.addEventListener('click', _onMouseClick);
+    body.addEventListener('click', _onMouseClick);
 
     /**
      * Обработчик клика по ссылке с классом 'popup-link'
@@ -38,7 +38,7 @@ var PopupLoader = function(){
                     window.location.href = link.getAttribute('href');
             });
 
-        popupElement.show();
+        show(popupElement);
     }
 
     /**
@@ -62,7 +62,7 @@ var PopupLoader = function(){
                 target = event.target || event.srcElement,
                 className = target.className;
 
-            if(className === 'popup-close' || className.indexOf('false') != -1) overlay.hide();
+            if(className === 'popup-close' || className.indexOf('false') != -1) hide(overlay);
             if(className.indexOf('ok') != -1) onOk();
             return;
         });
@@ -72,15 +72,15 @@ var PopupLoader = function(){
     /**
      * Показывает HTMLElement
      */
-    HTMLElement.prototype.show = function(){
-        this.style.display = 'block';
+    function show(element){
+        element.style.display = 'block';
     }
 
     /**
      * Скрывает HTMLElement
      */
-    HTMLElement.prototype.hide = function(){
-        this.style.display = 'none';
+    function hide(element){
+        element.style.display = 'none';
     }
 }();
 
