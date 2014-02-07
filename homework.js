@@ -15,7 +15,7 @@ var PopupLoader = function(){
         var event = e || window.event,
             target = event.target || event.srcElement;
 
-        if(target.tagName !== 'A' && target.className !== 'popup-link') return;
+        if(target.tagName !== 'A' && target.className.indexOf('popup-link') === -1) return;
 
         if(event.preventDefault)
             event.preventDefault();
@@ -30,16 +30,13 @@ var PopupLoader = function(){
      * @param {HTMLElement} link Ссылка с data-аттрибутами
      */
     function openPopupFromLink(link) {
-        var title = link.dataset.title,
-            message = link.dataset.message.replace('%s',link.getAttribute('href')),
-            popupElement = addInformation(title, message, function(e){
-                    var event = e || window.event,
-                        target = event.target || event.srcElement;
-
-                    window.location.href = link.getAttribute('href');
-            });
-
-        show(popupElement);
+        show(
+            addInformation(
+                link.dataset.title,
+                link.dataset.message.replace('%s', link.getAttribute('href')),
+                function(){ window.location.href = link.getAttribute('href');}
+            )
+        );
     }
 
     /**
