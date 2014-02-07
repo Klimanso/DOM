@@ -1,7 +1,8 @@
 var PopupLoader = function(){
     'use strict';
 
-    var body = document.body;
+    var body = document.body,
+        popupOverlay = body.getElementsByClassName('popup-overlay')[0];
 
     body.addEventListener('click', _onMouseClick);
 
@@ -49,10 +50,9 @@ var PopupLoader = function(){
      * @returns {HTMLElement}
      */
     function addInformation(title, message, onOk) {
-        var overlay = document.getElementsByClassName('popup-overlay')[0],
-            popupContainer = document.getElementsByClassName('popup')[0],
-            popupTitle = document.getElementsByClassName('popup-title')[0],
-            popupMessage = document.getElementsByClassName('popup-message')[0];
+        var popupContainer = popupOverlay.getElementsByClassName('popup')[0],
+            popupTitle = popupOverlay.getElementsByClassName('popup-title')[0],
+            popupMessage = popupOverlay.getElementsByClassName('popup-message')[0];
 
         popupTitle.innerHTML = title;
         popupMessage.innerHTML = message;
@@ -62,11 +62,11 @@ var PopupLoader = function(){
                 target = event.target || event.srcElement,
                 className = target.className;
 
-            if(className === 'popup-close' || className.indexOf('false') != -1) hide(overlay);
+            if(className === 'popup-close' || className.indexOf('false') != -1) hide(popupOverlay);
             if(className.indexOf('ok') != -1) onOk();
             return;
         });
-        return overlay;
+        return popupOverlay;
     }
 
     /**
